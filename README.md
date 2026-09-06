@@ -6,6 +6,10 @@ Built directly on the native Neovim 0.12 API without legacy wrapper overhead.
 
 [![CI Smoke Test](https://github.com/Dictor457/DictorVim/actions/workflows/ci.yml/badge.svg)](https://github.com/Dictor457/DictorVim/actions/workflows/ci.yml)
 
+<p align="center">
+  <img src="assets/demo.gif" alt="DictorVim Interactive Demo" width="95%">
+</p>
+
 ---
 
 ## Overview
