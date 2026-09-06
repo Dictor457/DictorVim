@@ -1,0 +1,10 @@
+# Runtime & temp
+.netrwhist
+undo/
+*.swp
+*.swo
+*~
+
+# Lazy cache
+lazy-lock.json
+/tmp/
