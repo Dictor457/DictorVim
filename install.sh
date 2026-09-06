@@ -37,19 +37,26 @@ else
     echo "    Install 'clang' or 'clang-tools-extra' to enable C++ diagnostics and code completion."
 fi
 
-# 5. Процесс развертывания
-TARGET_DIR="${HOME}/.config/dictorvim"
-if [ -d "$TARGET_DIR" ]; then
-    BACKUP="${TARGET_DIR}.backup.$(date +%s)"
-    echo "[*] Existing configuration detected. Moving to $BACKUP"
-    mv "$TARGET_DIR" "$BACKUP"
+# 5. Идемпотентная установка / обновление
+INSTALL_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/dictorvim"
+
+if [ -d "$INSTALL_DIR/.git" ]; then
+    echo "[*] Existing DictorVim repository detected at $INSTALL_DIR."
+    echo "[*] Updating installation (git pull --ff-only)..."
+    git -C "$INSTALL_DIR" pull --ff-only
+elif [ -d "$INSTALL_DIR" ]; then
+    BACKUP="${INSTALL_DIR}.backup.$(date +%s)"
+    echo "[!] Non-git directory exists at $INSTALL_DIR. Creating backup at $BACKUP..."
+    mv "$INSTALL_DIR" "$BACKUP"
+    echo "[*] Cloning DictorVim into $INSTALL_DIR..."
+    git clone https://github.com/Dictor457/DictorVim.git "$INSTALL_DIR"
+else
+    echo "[*] Cloning DictorVim repository into $INSTALL_DIR..."
+    git clone https://github.com/Dictor457/DictorVim.git "$INSTALL_DIR"
 fi
 
-echo "[*] Cloning DictorVim repository into $TARGET_DIR..."
-git clone https://github.com/Dictor457/DictorVim.git "$TARGET_DIR"
-
 echo ""
-echo "[✓] DictorVim successfully installed and verified."
+echo "[✓] DictorVim is ready and verified."
 echo "====================================================="
 echo "Launch isolated instance:"
 echo "    NVIM_APPNAME=dictorvim nvim"

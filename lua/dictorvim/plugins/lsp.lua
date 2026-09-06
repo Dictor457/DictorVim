@@ -1,5 +1,5 @@
 return {
-  -- Менеджер серверов
+  -- Менеджер LSP-серверов
   {
     "williamboman/mason.nvim",
     cmd = "Mason",
@@ -12,7 +12,7 @@ return {
     },
   },
 
-  -- Нативная конфигурация LSP без устаревшего фреймворка lspconfig
+  -- Нативная конфигурация LSP Neovim 0.12
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
@@ -24,7 +24,6 @@ return {
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- Настройка системных биндов при подключении любого LSP
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local map = vim.keymap.set
@@ -39,7 +38,7 @@ return {
         end,
       })
 
-      -- Современный Neovim 0.12+ API: конфигурируем clangd
+      -- Clangd с жесткой фиксацией C++20 даже без compile_commands.json
       vim.lsp.config("clangd", {
         capabilities = capabilities,
         cmd = {
@@ -48,11 +47,15 @@ return {
           "--clang-tidy",
           "--header-insertion=iwyu",
           "--completion-style=detailed",
+          "--fallback-style=llvm",
+        },
+        init_options = {
+          fallbackFlags = { "-std=c++20" },
         },
       })
       vim.lsp.enable("clangd")
 
-      -- Современный Neovim 0.12+ API: конфигурируем lua_ls
+      -- Lua LSP
       vim.lsp.config("lua_ls", {
         capabilities = capabilities,
         settings = {
