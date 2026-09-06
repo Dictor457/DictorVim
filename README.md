@@ -1,19 +1,22 @@
 # DictorVim
 
-A high-performance, minimalist Neovim configuration framework optimized for modern C++, systems programming, and security auditing.
+A high-performance, minimalist Neovim distribution engineered for modern C++, systems programming, and security auditing.
 
 Built directly on the native Neovim 0.12 API without legacy wrapper overhead.
+
+[![CI Smoke Test](https://github.com/Dictor457/DictorVim/actions/workflows/ci.yml/badge.svg)](https://github.com/Dictor457/DictorVim/actions/workflows/ci.yml)
 
 ---
 
 ## Overview
 
-DictorVim is designed specifically for engineers who require an instant, low-latency editing environment with first-class tooling for low-level development. Unlike general-purpose distributions, DictorVim excludes web-development bloat and focuses entirely on compilation speed, diagnostic accuracy, and memory debugging.
+DictorVim is designed specifically for engineers who require an instant, low-latency editing environment with first-class tooling for low-level development. Rather than being a bloated general-purpose bundle, DictorVim excludes unnecessary web-stack layers and focuses strictly on compilation speed, diagnostic accuracy, and memory safety.
 
 ### Key Characteristics
 
 - Sub-20ms Boot Time: Zero-cost startup architecture via strict event-driven deferred loading.
 - Native Neovim 0.12 Architecture: Full adoption of native `vim.lsp.config`, `vim.lsp.enable`, and built-in Tree-sitter integration.
+- Toolchain Sanity Checks: Automatic environment verification for compilers and diagnostic servers.
 - Integrated C++ Execution Engine: Automated compilation (`g++ -O3 -std=c++20`) and microsecond runtime measurement.
 - Memory Safety & Hardening: Built-in triggers for AddressSanitizer (`-fsanitize=address,undefined`) to detect buffer overflows and memory corruptions instantly.
 - Binary Inspection: Native toggleable hexadecimal editor for ELF files and shellcode analysis.
@@ -37,38 +40,37 @@ DictorVim is designed specifically for engineers who require an instant, low-lat
 
 ## Installation
 
-### Automated Installation
+### Recommended Method (Audited Git Clone)
 
-Run via terminal:
+Inspect and clone the repository directly to maintain full control over your environment:
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/dictor457/DictorVim/main/install.sh | bash
+git clone https://github.com/Dictor457/DictorVim.git ~/.config/dictorvim
 ```
 
-### Manual Installation
+Run DictorVim in isolated mode:
 
-Clone the repository to an isolated configuration directory:
-```bash
-git clone https://github.com/dictor457/DictorVim.git ~/.config/dictorvim
-```
-
-Launch DictorVim:
 ```bash
 NVIM_APPNAME=dictorvim nvim
 ```
 
-Optional shell alias for `~/.zshrc` or `~/.bashrc`:
+*(Optional) Configure an alias in your shell configuration (`~/.zshrc` or `~/.bashrc`):*
+
 ```bash
 alias dvim="NVIM_APPNAME=dictorvim nvim"
 ```
 
 ---
 
-## System Requirements
+## System Requirements & Toolchain
 
-- Neovim: >= 0.10.0 (Recommended: 0.12+)
-- Compilers & Tooling: `gcc`, `clang`, `clang-tools-extra`
-- Environment: Linux/Wayland, Nerd Font compatible terminal (e.g., Kitty)
-- Utilities: `git`, `curl`
+To utilize the full low-level toolchain, ensure the following packages are present on your system:
+
+- **Editor:** Neovim `>= 0.10.0` (Recommended: `0.12+`)
+- **Compilers:** `gcc` / `g++` (C++20 support)
+- **LSP & Formatting:** `clang` / `clangd`, `clang-tools-extra`
+- **Profiling (Optional):** GNU `time` (`/usr/bin/time`)
+- **Terminal:** Linux/Wayland, Nerd Font compatible terminal (e.g., Kitty)
 
 ---
 

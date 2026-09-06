@@ -1,0 +1,27 @@
+name: CI Smoke Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Neovim Nightly
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: nightly
+
+      - name: Verify Configuration Syntax & Boot
+        run: |
+          mkdir -p ~/.config/dictorvim
+          cp -r . ~/.config/dictorvim
+          # Запуск Neovim в headless режиме: если синтаксис Lua битый — упадет с кодом != 0
+          NVIM_APPNAME=dictorvim nvim --headless -c "lua print('DictorVim Syntax OK')" -c "qa"
